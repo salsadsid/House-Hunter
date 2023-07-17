@@ -2,8 +2,10 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
+import { toast } from "react-hot-toast";
 
 const Sign = () => {
+  const [token,setToken]=useState("")
   const {
     register,
     handleSubmit,
@@ -13,12 +15,24 @@ const Sign = () => {
   const {user,createUser} = useContext(AuthContext)
 
   console.log(user);
-  const handleSignUp = async (data) => {
+  const handleSignUp =async (data) => {
     console.log(data);
-    const result = createUser({...data,confirmPassword:undefined})
-    console.log(result);
+    const result =await createUser({...data,confirmPassword:undefined})
+    if(result.status=="Fail"){
+      console.log(result.error.keyPattern.email);
+      if(result.error.keyPattern.email){
+        toast.error("User Already Exist!",{id:"User"})
+      }else{
+        toast.error("User Already Exist!",{id:"User"})
+      }
+    }
+    if(result.status=="Success"){
+      setToken(result.data.token)
+      toast.success(result.message ,{id:"User"})
+    }
     //
   };
+  console.log(token);
   return (
     <section className="w-full flex flex-col items-center justify-center bg-gray-50 sm:px-4">
       <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
