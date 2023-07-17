@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthProvider';
+import { toast } from 'react-hot-toast';
 
 const Login = () => {
+  const [token,setToken]=useState("")
     const {
         register,
         handleSubmit,
         formState: { errors },
       } = useForm();
-    
-      const handleLogin = (data) =>{
+      const {loginUser} = useContext(AuthContext)
+      const handleLogin = async(data) =>{
+        setToken("")
         console.log(data)
+        const result=await loginUser(data)
+        if(result.status=="Fail"){
+            toast.error(result.message,{id:"User"})
+            
+        }
+        if(result.status=="Success"){
+          setToken(result.data.token)
+          toast.success(result.message ,{id:"User"})
+        }
       }
+      console.log(token);
     return (
         <section className="relative w-full flex flex-col items-center justify-center bg-white px-4">
         <div className="max-w-sm w-full text-gray-600">
