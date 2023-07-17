@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Sign = () => {
   const {
@@ -9,9 +10,13 @@ const Sign = () => {
     watch,
     formState: { errors },
   } = useForm();
+  const {user,createUser} = useContext(AuthContext)
 
+  console.log(user);
   const handleSignUp = async (data) => {
     console.log(data);
+    const result = createUser({...data,confirmPassword:undefined})
+    console.log(result);
     //
   };
   return (
@@ -39,18 +44,17 @@ const Sign = () => {
               <label className="font-medium">Full Name</label>
               <input
                 type="text"
-                name="name"
-                {...register("name", {
+                name="fullName"
+                {...register("fullName", {
                   required: true,
                 })}
                 className={`w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border ${
-                  errors.name?.type === "required" ||
-                  errors.name?.type === "minLength"
+                  errors.fullName?.type === "required"
                     ? "focus:border-red-500"
                     : "focus:border-indigo-600"
                 } shadow-sm rounded-lg`}
               />
-              {errors.name?.type === "required" && (
+              {errors.fullName?.type === "required" && (
                 <small className="text-orange-700">Full Name is required</small>
               )}
             </div>
@@ -66,8 +70,8 @@ const Sign = () => {
                 })}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
-                <option value="owner">House Owner</option>
                 <option value="renter">House Renter</option>
+                <option value="owner">House Owner</option>
               </select>
               {errors.role?.message && (
                 <small className="text-orange-700">
