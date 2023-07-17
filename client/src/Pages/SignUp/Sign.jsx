@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 const Sign = () => {
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-      } = useForm();
-     
-    
-     
-     
-      const handleSignUp = async (data) => {
-        
-        console.log(data)
-        // 
-    }
-    return (
-        <section className="w-full flex flex-col items-center justify-center bg-gray-50 sm:px-4">
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const handleSignUp = async (data) => {
+    console.log(data);
+    //
+  };
+  return (
+    <section className="w-full flex flex-col items-center justify-center bg-gray-50 sm:px-4">
       <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
         <div className="text-center">
           <div className="mt-5 space-y-2">
@@ -40,36 +36,67 @@ const Sign = () => {
         <div className="bg-white shadow p-4 py-6 sm:p-6 sm:rounded-lg">
           <form onSubmit={handleSubmit(handleSignUp)} className="space-y-5">
             <div>
-              <label className="font-medium">Username</label>
+              <label className="font-medium">Full Name</label>
               <input
                 type="text"
-                name="username"
-               
-                {...register("username", {
+                name="name"
+                {...register("name", {
                   required: true,
-                  validate: {
-                    minLength: (v) => v.length > 5,
-                  },
                 })}
-                className={`w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border ${errors.username?.type === "required" || errors.username?.type === "minLength"? "focus:border-red-500": "focus:border-indigo-600"} shadow-sm rounded-lg`}
+                className={`w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border ${
+                  errors.name?.type === "required" ||
+                  errors.name?.type === "minLength"
+                    ? "focus:border-red-500"
+                    : "focus:border-indigo-600"
+                } shadow-sm rounded-lg`}
               />
-              {errors.username?.type === "required" && (
-                <small className="text-orange-700">Username is required</small>
+              {errors.name?.type === "required" && (
+                <small className="text-orange-700">Full Name is required</small>
               )}
-
-              
-
-              {errors.username?.type === "minLength" && (
+            </div>
+            <div>
+              <label className=" font-medium " htmlFor="role">
+                Role
+              </label>
+              <select
+                name="role"
+                id="role"
+                {...register("role",{
+                    required:"Role is Required"
+                })}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option value="owner">House Owner</option>
+                <option value="renter">House Renter</option>
+              </select>
+              {errors.role?.message && (
                 <small className="text-orange-700">
-                  The username should have at least 6 characters
+                  {errors.email.message}
                 </small>
+              )}
+            </div>
+            <div>
+              <label className="font-medium">Phone Number</label>
+              <input
+                type="text"
+                name="phone"
+                {...register("phone", {
+                  required: true,
+                })}
+                className={`w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border ${
+                  errors.phone?.type === "required"
+                    ? "focus:border-red-500"
+                    : "focus:border-indigo-600"
+                } shadow-sm rounded-lg`}
+              />
+              {errors.phone?.type === "required" && (
+                <small className="text-orange-700">Phone Number is required</small>
               )}
             </div>
             <div>
               <label className="font-medium">Email</label>
               <input
                 type="email"
-               
                 {...register("email", {
                   required: "Email is required",
                   validate: {
@@ -78,14 +105,17 @@ const Sign = () => {
                       "Email address must be a valid address",
                   },
                 })}
-                className={`w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border ${errors.email?.message? "focus:border-red-500": "focus:border-indigo-600"} shadow-sm rounded-lg`}
+                className={`w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border ${
+                  errors.email?.message
+                    ? "focus:border-red-500"
+                    : "focus:border-indigo-600"
+                } shadow-sm rounded-lg`}
               />
               {errors.email?.message && (
                 <small className="text-orange-700">
                   {errors.email.message}
                 </small>
               )}
-               
             </div>
             <div>
               <label className="font-medium">Password</label>
@@ -138,7 +168,7 @@ const Sign = () => {
         </div>
       </div>
     </section>
-    );
+  );
 };
 
 export default Sign;
