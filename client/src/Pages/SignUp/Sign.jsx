@@ -5,30 +5,31 @@ import { AuthContext } from "../../context/AuthProvider";
 import { toast } from "react-hot-toast";
 
 const Sign = () => {
-  const [token,setToken]=useState("")
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const {user,createUser} = useContext(AuthContext)
+  const { user, createUser, token, setToken, setUser } =
+    useContext(AuthContext);
 
   console.log(user);
-  const handleSignUp =async (data) => {
+  const handleSignUp = async (data) => {
     console.log(data);
-    const result =await createUser({...data,confirmPassword:undefined})
-    if(result.status=="Fail"){
+    const result = await createUser({ ...data, confirmPassword: undefined });
+    if (result.status == "Fail") {
       console.log(result.error.keyPattern.email);
-      if(result.error.keyPattern.email){
-        toast.error("User Already Exist!",{id:"User"})
-      }else{
-        toast.error("User Already Exist!",{id:"User"})
+      if (result.error.keyPattern.email) {
+        toast.error("User Already Exist!", { id: "User" });
+      } else {
+        toast.error("User Already Exist!", { id: "User" });
       }
     }
-    if(result.status=="Success"){
-      setToken(result.data.token)
-      toast.success(result.message ,{id:"User"})
+    if (result.status == "Success") {
+      setUser(result.data.user);
+      setToken(result.data.token);
+      toast.success(result.message, { id: "User" });
     }
     //
   };
@@ -79,8 +80,8 @@ const Sign = () => {
               <select
                 name="role"
                 id="role"
-                {...register("role",{
-                    required:"Role is Required"
+                {...register("role", {
+                  required: "Role is Required",
                 })}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
@@ -108,7 +109,9 @@ const Sign = () => {
                 } shadow-sm rounded-lg`}
               />
               {errors.phone?.type === "required" && (
-                <small className="text-orange-700">Phone Number is required</small>
+                <small className="text-orange-700">
+                  Phone Number is required
+                </small>
               )}
             </div>
             <div>
