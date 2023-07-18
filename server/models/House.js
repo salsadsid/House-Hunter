@@ -18,6 +18,10 @@ const houseSchema= mongoose.Schema({
         type:String,
         required:[true,"Bedroom Number is Required"]
     },
+    bathroom:{
+        type:String,
+        required:[true,"Bathroom Number is Required"]
+    },
     roomSize:{
         type:String,
         required:[true,"Room Size is Required"]
