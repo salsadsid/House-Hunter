@@ -35,6 +35,26 @@ const OwnedResidences = () => {
   if(isLoading){
     return <p>loading</p>
   }
+
+  const handlePropertyDelete=async(id)=>{
+    try {
+      const res = await fetch(`http://localhost:8080/api/v1/house/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      const data = await res.json();
+     if(data.data.acknowledged){
+      refetch()
+      toast.success("Successfully Deleted");
+     }
+     
+    } catch (error) {
+      toast.error("Internal Error");
+    }
+  }
   const closeModal=()=>{
     setHouseInfo(null)
   }
@@ -96,7 +116,9 @@ const OwnedResidences = () => {
                 <td>{property.bedroom}</td>
                 <td>{property.bathroom}</td>
                 <td><label
-          htmlFor="update_house" onClick={()=>setHouseInfo(property)}>Edit</label></td>
+          htmlFor="update_house" onClick={()=>setHouseInfo(property)}>Edit</label>
+          <button onClick={()=>handlePropertyDelete(property._id)}>delete</button>
+          </td>
               </tr>
             ))}
 

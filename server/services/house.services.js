@@ -12,9 +12,9 @@ exports.getHousesService=async(userEmail)=>{
     return result
 }
 
-exports.getHousesService=async(userEmail)=>{
-    console.log(userEmail);
-    const result =await House.find({"owner.email":userEmail})
+
+exports.getAllHousesService=async()=>{
+    const result =await House.find({})
     return result
 }
 exports.getHouseService=async(id)=>{
@@ -25,4 +25,9 @@ exports.getHouseService=async(id)=>{
 exports.updateAHouseService = async (houseId, data) => {
     const result = await House.updateOne({ _id: houseId }, { $set: data }) 
     return result
+}
+
+exports.removeHouseService = async (id) => {
+    const result = await House.deleteOne({_id:id})
+    return result;
 }

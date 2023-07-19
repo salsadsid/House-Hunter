@@ -5,7 +5,12 @@ exports.addBookingService = async (bookingInfo) => {
     return result;
 }
 
-exports.bookingCountService = async (email) => {
-    const result = (await Booking.find({"rentedBy.email":email})).length
+exports.getBookingService = async (email) => {
+    const result = await Booking.find({"rentedBy.email":email})
     return result;
 }
+exports.removeBookingService = async (id) => {
+    const result = (await Booking.deleteOne({_id:id}))
+    return result;
+}
+

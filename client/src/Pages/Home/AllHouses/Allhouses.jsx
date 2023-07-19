@@ -12,11 +12,10 @@ const Allhouses = () => {
     queryKey: ["houses"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/v1/house/all", {
+        const res = await fetch("http://localhost:8080/api/v1/house/", {
           method: "GET",
           headers: {
             "content-type": "application/json",
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         });
         const data = await res.json();

@@ -1,4 +1,4 @@
-const { addHouseService, getHousesService, updateAHouseService, getHouseService } = require("../services/house.services")
+const { addHouseService, getHousesService, updateAHouseService, getHouseService, getAllHousesService, removeHouseService } = require("../services/house.services")
 
 
 
@@ -25,6 +25,21 @@ console.log(req.body);
 exports.getHouses =async(req,res,next)=>{
     try {
         const properties = await getHousesService(req.user.email)
+        console.log(properties.length)
+        res.status(200).json({
+            status: "Success",
+            message: "Sign Up Successful",
+            data: {
+                properties
+            },
+          });
+    } catch (error) {
+        console.log(error)
+    }
+}
+exports.getAllHouses =async(req,res,next)=>{
+    try {
+        const properties = await getAllHousesService()
         console.log(properties.length)
         res.status(200).json({
             status: "Success",
@@ -75,4 +90,24 @@ exports.getAHouse=async(req,res,next)=>{
         error: error.message
     })
    }
+}
+
+
+exports.removeAHouse=async(req,res,next)=>{
+    try{
+        const id=req.params.id;
+        console.log(id);
+        const result = await removeHouseService(id)
+        return res.status(200).json({
+            status: "Success",
+            message:"Successfully Delete House info.",
+            data: result
+        })
+    }catch(error){
+        res.status(400).json({
+            status: "Fail",
+            message: "Can't Delete House.",
+            error: error.message
+        })
+    }
 }
