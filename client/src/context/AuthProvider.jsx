@@ -1,20 +1,24 @@
 import { createContext, useEffect, useState } from "react";
+import useToken from "../hook/useToken";
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState("");
-
+  const [loading,setLoading]= useState(false)
  useEffect(()=>{
-  if(token){
-    localStorage.setItem('accessToken',token)
-  }
   if(!token){
     const getToken = localStorage.getItem("accessToken");
     setToken(getToken);
   }
- },[token,setToken])
+ },[setToken,token])
+ const [userInfo]= useToken(token)
+ useEffect(()=>{
+  if(userInfo){
+    setUser(userInfo)
+   }
+ },[userInfo,setUser])
   const createUser = async (userData) => {
     console.log(userData);
     const res = await fetch("http://localhost:8080/api/v1/user/sign", {
@@ -29,7 +33,7 @@ const AuthProvider = ({ children }) => {
     return data;
   };
   const loginUser = async (userData) => {
-    console.log(userData);
+    // console.log(userData);
     const res = await fetch("http://localhost:8080/api/v1/user/login", {
       method: "POST",
       headers: {
@@ -42,6 +46,8 @@ const AuthProvider = ({ children }) => {
     return data;
   };
   const authInfo = {
+    loading,
+    setLoading,
     createUser,
     loginUser,
     user,

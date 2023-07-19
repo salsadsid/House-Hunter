@@ -5,6 +5,8 @@ import Sign from "../Pages/SignUp/Sign";
 import Login from "../Pages/Login/Login";
 import DashboardLayout from "../Layout/DashboardLayout";
 import OwnedResidences from "../Pages/Dashboard/OwnedResidences";
+import PrivateRoute from "./PrivateRoute";
+import OwnerRoute from "./OwnerRoute";
 
 
 const routes =createBrowserRouter([
@@ -28,7 +30,7 @@ const routes =createBrowserRouter([
     },
     {
         path:"/dashboard",
-        element:<DashboardLayout></DashboardLayout> ,
+        element:<PrivateRoute><DashboardLayout></DashboardLayout> </PrivateRoute>,
         children:[
             {
                 path:"/dashboard",
@@ -36,7 +38,7 @@ const routes =createBrowserRouter([
             },
             {
                 path:"/dashboard/owned",
-                element:<OwnedResidences></OwnedResidences>
+                element:<OwnerRoute><OwnedResidences></OwnedResidences></OwnerRoute>
             },
         ]
     }

@@ -1,32 +1,39 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 import { toast } from 'react-hot-toast';
 
 const Login = () => {
-  
+    const navigate=useNavigate()
+    const location=useLocation()
+    const from= location.state?.from?.pathname || "/"
     const {
         register,
         handleSubmit,
         formState: { errors },
       } = useForm();
-      const {loginUser,user,setUser,token,setToken} = useContext(AuthContext)
+      const {loginUser,user,setToken,setLoading,loading} = useContext(AuthContext)
       const handleLogin = async(data) =>{
-        
-        console.log(data)
+       
+        // console.log(data)
         const result=await loginUser(data)
         if(result.status=="Fail"){
             toast.error(result.message,{id:"User"})
-            
         }
         if(result.status=="Success"){
-          setUser(result.data.user)
+          setLoading(true)
+          localStorage.setItem('accessToken',result.data.token)    
           setToken(result.data.token)
-          toast.success(result.message ,{id:"User"})
         }
       }
-      
+    if(user){
+      setLoading(false)
+      navigate(from,{replace:true})
+    }
+    if(loading){
+      return <p>Loadig ...</p>
+    }
     return (
         <section className="relative w-full flex flex-col items-center justify-center bg-white px-4">
         <div className="max-w-sm w-full text-gray-600">

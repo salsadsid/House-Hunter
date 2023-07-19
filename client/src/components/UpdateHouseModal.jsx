@@ -17,7 +17,7 @@ const UpdateHouseModal = ({ property, refetch,setHouseInfo }) => {
     description,
     availableDate,
   } = property;
-  console.log(name);
+  // console.log(name);
   const {
     register,
     formState: { errors },
@@ -71,7 +71,7 @@ const UpdateHouseModal = ({ property, refetch,setHouseInfo }) => {
           body:JSON.stringify(moddedData)
         });
     const result= await res.json()
-    console.log(result);
+    // console.log(result);
    if(result.data.modifiedCount){
         toast.success(`Property data updated`,{id:"House"})
         refetch();

@@ -1,17 +1,18 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import { toast } from "react-hot-toast";
 
 const Sign = () => {
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const { user, createUser, token, setToken, setUser } =
+  const { user, createUser, loading, setToken, setLoading } =
     useContext(AuthContext);
 
   console.log(user);
@@ -27,13 +28,19 @@ const Sign = () => {
       }
     }
     if (result.status == "Success") {
-      setUser(result.data.user);
-      setToken(result.data.token);
-      toast.success(result.message, { id: "User" });
+      setLoading(true)
+      localStorage.setItem('accessToken',result.data.token)    
+      setToken(result.data.token)
     }
     //
   };
-  console.log(token);
+  if(user){
+    setLoading(false)
+    navigate("/")
+  }
+  if(loading){
+    return <p>Loadig ...</p>
+  }
   return (
     <section className="w-full flex flex-col items-center justify-center bg-gray-50 sm:px-4">
       <div className="w-full space-y-6 text-gray-600 sm:max-w-md">

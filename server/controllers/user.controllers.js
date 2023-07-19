@@ -73,3 +73,20 @@ exports.login=async(req,res,next)=>{
         })
     }
 }
+
+
+exports.persist = async (req, res, next) => {
+    try {
+        const user = await findUserByEmail(req.user?.email)
+        const { password: pwd, ...other } = user.toObject()
+        res.status(200).json({
+            status: "Success",
+            user: other
+        })
+    } catch (error) {
+        res.status(500).json({
+            status: "Fail",
+            error,
+        })
+    }
+}

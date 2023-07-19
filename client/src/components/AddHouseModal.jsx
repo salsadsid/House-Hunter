@@ -10,9 +10,9 @@ const AddHouseModal = () => {
     handleSubmit,
   } = useForm();
   const {token,user} =useContext(AuthContext)
-  console.log(token,user);
+  // console.log(token,user);
   const handleAddHouse=async(data)=>{
-    console.log(data);
+    // console.log(data);
     data.owner={
         id:user._id,
         fullName:user.fullName,

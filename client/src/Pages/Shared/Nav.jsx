@@ -24,6 +24,7 @@ const Nav = () => {
   const handleLogout=()=>{
     setUser("");
     setToken("");
+    localStorage.removeItem('accessToken')
   }
   return (
     <nav
@@ -54,9 +55,9 @@ const Nav = () => {
               />
             </svg>
           </label>}
-          <a href="javascript:void(0)">
+          <Link to="/">
             <img src={img} width={120} height={50} alt="Float UI logo" />
-          </a>
+          </Link>
           <div className="md:hidden">
             <button
               className="menu-btn text-gray-500 hover:text-gray-800"

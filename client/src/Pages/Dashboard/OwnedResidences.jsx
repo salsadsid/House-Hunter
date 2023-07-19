@@ -24,7 +24,7 @@ const OwnedResidences = () => {
           },
         });
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         return data;
       } catch (error) {
         toast.error("Internal Error");
