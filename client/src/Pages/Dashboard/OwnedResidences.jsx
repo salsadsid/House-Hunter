@@ -116,8 +116,9 @@ const OwnedResidences = () => {
                 <td>{property.bedroom}</td>
                 <td>{property.bathroom}</td>
                 <td><label
-          htmlFor="update_house" onClick={()=>setHouseInfo(property)}>Edit</label>
-          <button onClick={()=>handlePropertyDelete(property._id)}>delete</button>
+          htmlFor="update_house" className="bg-yellow-500 text-white active:bg-yellow-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" onClick={()=>setHouseInfo(property)}>Edit</label>
+          <button className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
+      onClick={()=>handlePropertyDelete(property._id)}>delete</button>
           </td>
               </tr>
             ))}
@@ -133,7 +134,7 @@ const OwnedResidences = () => {
           ></UpdateHouseModal>
         }
       </div>
-      <AddHouseModal></AddHouseModal>
+      <AddHouseModal refetch={refetch}></AddHouseModal>
     </div>
   );
 };

@@ -97,7 +97,7 @@ const Sign = () => {
               </select>
               {errors.role?.message && (
                 <small className="text-orange-700">
-                  {errors.email.message}
+                  {errors.role.message}
                 </small>
               )}
             </div>

@@ -75,7 +75,7 @@ const BookingList = () => {
                 <td>{booking.rentedBy.fullName}</td>
                 <td>{booking.rentedBy.email}</td>
                 <td>{booking.rentedBy.phone}</td>
-                <td><button onClick={()=>handleBookingRemove(booking._id)}>Delete</button></td>
+                <td><button onClick={()=>handleBookingRemove(booking._id)} className='g-yellow-500 text-white active:bg-yellow-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>Delete</button></td>
               </tr>
             ))}
 

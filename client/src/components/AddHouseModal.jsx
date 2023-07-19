@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { AuthContext } from "../context/AuthProvider";
 import { toast } from 'react-hot-toast';
-const AddHouseModal = () => {
+const AddHouseModal = ({refetch}) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset
   } = useForm();
   const {token,user} =useContext(AuthContext)
   // console.log(token,user);
@@ -29,7 +30,9 @@ const AddHouseModal = () => {
         });
     const result= await res.json()
    if(result.status=="Success"){
+    refetch()
         toast.success(`${result.data.result.name} Property added to your list`,{id:"House"})
+        reset()
    }
    if(result.status=="Fail"){
         toast.error(`Fail to add property to your list`,{id:"House"})
@@ -210,8 +213,13 @@ const AddHouseModal = () => {
                 <input
                   {...register("phone", {
                     required: "Phone Number is required",
+                    validate: {
+                      matchPattern: (v) =>
+                      /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/.test(v) ||
+                        "Bangladesh Phone Number Required",
+                    },
                   })}
-                  type="number"
+                  type="text"
                   name="phone"
                   className={`w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border 
                 focus:border-indigo-600
