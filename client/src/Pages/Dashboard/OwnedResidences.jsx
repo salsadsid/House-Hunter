@@ -107,6 +107,7 @@ const OwnedResidences = () => {
           property={houseInfo}
           closeModal={closeModal}
           refetch={refetch}
+          setHouseInfo={setHouseInfo}
           ></UpdateHouseModal>
         }
       </div>

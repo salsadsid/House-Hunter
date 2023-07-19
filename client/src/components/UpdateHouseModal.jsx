@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { useQuery } from "react-query";
 
-const UpdateHouseModal = ({ property }) => {
+const UpdateHouseModal = ({ property, refetch,setHouseInfo }) => {
   const {
     name,
     address,
@@ -45,7 +47,41 @@ const UpdateHouseModal = ({ property }) => {
   //     }, 2000);
   //   }, [reset,property]);
 
-  const handleAddHouse = async (data) => {};
+  const handleAddHouse = async (data) => {
+    const moddedData = {
+      ...property,
+      name: data.name,
+      address: data.address,
+      city: data.city,
+      phone: data.phone,
+      bedroom: data.bedroom,
+      bathroom: data.bathroom,
+      picture: data.picture,
+      rent: data.rent,
+      roomSize: data.roomSize,
+      description: data.description,
+      availableDate: data.availableDate,
+    };
+    const res = await fetch(`http://localhost:8080/api/v1/house/update/${property._id}`,{
+          method:"PATCH",
+          headers:{
+            "content-type":"application/json",
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          body:JSON.stringify(moddedData)
+        });
+    const result= await res.json()
+    console.log(result);
+   if(result.data.modifiedCount){
+        toast.success(`Property data updated`,{id:"House"})
+        refetch();
+        reset();
+      setHouseInfo(null)
+   }
+   if(result.status=="Fail"){
+        toast.error(`Fail to update property data`,{id:"House"})
+   }
+  };
 
   return (
     <>
@@ -259,7 +295,7 @@ const UpdateHouseModal = ({ property }) => {
             </button>
           </form>
           <div className="modal-action">
-            <label htmlFor="update_house" className="btn">
+            <label htmlFor="update_house" className="btn"onClick={()=>setHouseInfo(null)}>
               Close!
             </label>
           </div>
