@@ -5,7 +5,7 @@ const useToken = (token) => {
     const [userInfo,setUserInfo]=useState("")
     useEffect(()=>{
         if(token){
-            fetch(`http://localhost:8080/api/v1/user/persistAuth`,{
+            fetch(`https://house-hunter-rrlc.onrender.com/api/v1/user/persistAuth`,{
                 method:"GET",
                 headers:{
                   "content-type":"application/json",

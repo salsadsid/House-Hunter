@@ -32,7 +32,7 @@ const routes =createBrowserRouter([
             {
                 path:"/booking/:id",
                 element:<PrivateRoute><RenterRoute><Booking></Booking></RenterRoute></PrivateRoute>,
-                loader:({params})=>fetch(`http://localhost:8080/api/v1/house/${params.id}`)
+                loader:({params})=>fetch(`https://house-hunter-rrlc.onrender.com/api/v1/house/${params.id}`)
             }
         ]
     },

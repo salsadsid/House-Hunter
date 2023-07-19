@@ -62,7 +62,7 @@ const UpdateHouseModal = ({ property, refetch,setHouseInfo }) => {
       description: data.description,
       availableDate: data.availableDate,
     };
-    const res = await fetch(`http://localhost:8080/api/v1/house/update/${property._id}`,{
+    const res = await fetch(`https://house-hunter-rrlc.onrender.com/api/v1/house/update/${property._id}`,{
           method:"PATCH",
           headers:{
             "content-type":"application/json",

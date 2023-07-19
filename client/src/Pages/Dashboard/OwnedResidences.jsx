@@ -16,7 +16,7 @@ const OwnedResidences = () => {
     queryKey: ["houses"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/v1/house/all", {
+        const res = await fetch("https://house-hunter-rrlc.onrender.com/api/v1/house/all", {
           method: "GET",
           headers: {
             "content-type": "application/json",
@@ -38,7 +38,7 @@ const OwnedResidences = () => {
 
   const handlePropertyDelete=async(id)=>{
     try {
-      const res = await fetch(`http://localhost:8080/api/v1/house/delete/${id}`, {
+      const res = await fetch(`https://house-hunter-rrlc.onrender.com/api/v1/house/delete/${id}`, {
         method: "DELETE",
         headers: {
           "content-type": "application/json",

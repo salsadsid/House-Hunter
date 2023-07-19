@@ -41,7 +41,7 @@ const Booking = () => {
                 address:address,
                 id:_id
             }
-            const res = await fetch("http://localhost:8080/api/v1/booking/add",{
+            const res = await fetch("https://house-hunter-rrlc.onrender.com/api/v1/booking/add",{
           method:"POST",
           headers:{
             "content-type":"application/json",

@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
  },[userInfo,setUser])
   const createUser = async (userData) => {
     console.log(userData);
-    const res = await fetch("http://localhost:8080/api/v1/user/sign", {
+    const res = await fetch("https://house-hunter-rrlc.onrender.com/api/v1/user/sign", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
   };
   const loginUser = async (userData) => {
     // console.log(userData);
-    const res = await fetch("http://localhost:8080/api/v1/user/login", {
+    const res = await fetch("https://house-hunter-rrlc.onrender.com/api/v1/user/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -20,7 +20,7 @@ const AddHouseModal = ({refetch}) => {
         email:user.email,
     }
     
-      const res = await fetch("http://localhost:8080/api/v1/house/add",{
+      const res = await fetch("https://house-hunter-rrlc.onrender.com/api/v1/house/add",{
           method:"POST",
           headers:{
             "content-type":"application/json",

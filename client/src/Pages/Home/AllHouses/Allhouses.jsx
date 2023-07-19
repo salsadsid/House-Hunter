@@ -15,13 +15,13 @@ const Allhouses = () => {
     formState: { errors },
   } = useForm();
   useEffect(() => {
-    fetch(`http://localhost:8080/api/v1/house/?page=${page}&size=${size}`)
+    fetch(`https://house-hunter-rrlc.onrender.com/api/v1/house/?page=${page}&size=${size}`)
         .then(res => res.json())
         .then(data =>  setHouse(data.data.properties))
 }, [page, size])
        
   useEffect(() => {
-    fetch("http://localhost:8080/api/v1/house/count")
+    fetch("https://house-hunter-rrlc.onrender.com/api/v1/house/count")
       .then((res) => res.json())
       .then((data) => {
         const count = data.data.result;

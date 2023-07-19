@@ -11,7 +11,7 @@ const BookingList = () => {
         queryKey: ["bookings"],
         queryFn: async () => {
           try {
-            const res = await fetch("http://localhost:8080/api/v1/booking/get", {
+            const res = await fetch("https://house-hunter-rrlc.onrender.com/api/v1/booking/get", {
               method: "GET",
               headers: {
                 "content-type": "application/json",
@@ -29,7 +29,7 @@ const BookingList = () => {
 
       const handleBookingRemove=async(id)=>{
         try {
-            const res = await fetch(`http://localhost:8080/api/v1/booking/delete/${id}`, {
+            const res = await fetch(`https://house-hunter-rrlc.onrender.com/api/v1/booking/delete/${id}`, {
               method: "DELETE",
               headers: {
                 "content-type": "application/json",
