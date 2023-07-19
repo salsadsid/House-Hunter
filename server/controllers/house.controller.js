@@ -1,4 +1,4 @@
-const { addHouseService, getHousesService, updateAHouseService, getHouseService, getAllHousesService, removeHouseService } = require("../services/house.services")
+const { addHouseService, getHousesService, updateAHouseService, getHouseService, getAllHousesService, removeHouseService, getAllHousesCountService } = require("../services/house.services")
 
 
 
@@ -39,13 +39,29 @@ exports.getHouses =async(req,res,next)=>{
 }
 exports.getAllHouses =async(req,res,next)=>{
     try {
-        const properties = await getAllHousesService()
-        console.log(properties.length)
+        const page = parseInt(req.query.page);
+        const size = parseInt(req.query.size);
+        const properties = await getAllHousesService(page,size)
+        
         res.status(200).json({
             status: "Success",
             message: "Sign Up Successful",
             data: {
                 properties
+            },
+          });
+    } catch (error) {
+        console.log(error)
+    }
+}
+exports.getAllHousesCount =async(req,res,next)=>{
+    try {
+        const result = await getAllHousesCountService()
+        res.status(200).json({
+            status: "Success",
+            message: "Count Success",
+            data: {
+                result
             },
           });
     } catch (error) {

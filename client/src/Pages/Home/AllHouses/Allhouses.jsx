@@ -1,45 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
 import HouseCard from "../../../components/HouseCard";
 import { useForm } from "react-hook-form";
 
 const Allhouses = () => {
-  const [house,setHouse]=useState([])
+  const [house, setHouse] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const {
-    data,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["houses"],
-    queryFn: async () => {
-      try {
-        const res = await fetch("http://localhost:8080/api/v1/house/", {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-          },
-        });
-        const data = await res.json();
-        setHouse(data.data.properties)
-        return data;
-      } catch (error) {
-        toast.error("Internal Error");
-      }
-    },
-  });
-  if (isLoading) {
-    return <p>loading</p>;
-  }
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/v1/house/?page=${page}&size=${size}`)
+        .then(res => res.json())
+        .then(data =>  setHouse(data.data.properties))
+}, [page, size])
+       
+  useEffect(() => {
+    fetch("http://localhost:8080/api/v1/house/count")
+      .then((res) => res.json())
+      .then((data) => {
+        const count = data.data.result;
+        const pages = Math.ceil(count / 10);
+        setPageCount(pages);
+      });
+  }, []);
+  
+
   const handleSearch = (data) => {
-    const{filter,keyword}=data
-   const searchedHouse= house.filter(h=>h[filter].includes(keyword))
-   setHouse(searchedHouse)
+    const { filter, keyword } = data;
+    const searchedHouse = house.filter((h) => h[filter].includes(keyword));
+    setHouse(searchedHouse);
   };
   return (
     <div>
@@ -76,7 +71,6 @@ const Allhouses = () => {
             type="text"
             {...register("keyword", {
               required: "Keyword is required",
-              
             })}
             className={`w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border ${
               errors.keyword?.message
@@ -97,6 +91,26 @@ const Allhouses = () => {
           house?.map((property) => (
             <HouseCard key={property._id} property={property}></HouseCard>
           ))}
+      </div>
+      <div className="pagination">
+        {[...Array(pageCount).keys()].map((number) => (
+          <button
+            className={page === number ? "selected btn" : "btn"}
+            onClick={() => setPage(number)}
+          >
+            {number + 1}
+          </button>
+        ))}
+      </div>
+      <div>
+        <select onChange={(e) => setSize(e.target.value)} className="btn">
+          <option value="5">5</option>
+          <option value="10" selected>
+            10
+          </option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
       </div>
     </div>
   );

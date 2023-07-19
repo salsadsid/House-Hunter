@@ -42,7 +42,7 @@ const routes =createBrowserRouter([
         children:[
             {
                 path:"/dashboard",
-                element:<button className="btn">dasd</button>
+                element:<p className="text-3xl font-bold">Welcome To Dashboard</p>
             },
             {
                 path:"/dashboard/owned",

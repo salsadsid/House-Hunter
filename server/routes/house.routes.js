@@ -8,6 +8,7 @@ router.route('/add').post(verifyToken,houseController.addHouse)
 router.route('/all').get(verifyToken,houseController.getHouses)
 
 router.route('/').get(houseController.getAllHouses)
+router.route('/count').get(houseController.getAllHousesCount)
 
 router.route('/update/:id').patch(verifyToken,houseController.updateAHouse)
 router.route('/delete/:id').delete(verifyToken,houseController.removeAHouse)

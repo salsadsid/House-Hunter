@@ -13,8 +13,19 @@ exports.getHousesService=async(userEmail)=>{
 }
 
 
-exports.getAllHousesService=async()=>{
-    const result =await House.find({})
+exports.getAllHousesService=async(page,size)=>{
+    if (page || size) {
+        result = await House.find({}).skip(page * size).limit(size);
+    }
+    else {
+        result = await House.find({});
+    }
+    console.log(result);
+    return result
+}
+exports.getAllHousesCountService=async()=>{
+    const result =(await House.find({})).length
+    console.log(result,"sasa");
     return result
 }
 exports.getHouseService=async(id)=>{
