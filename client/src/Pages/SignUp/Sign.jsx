@@ -36,7 +36,7 @@ const Sign = () => {
   };
   if(user){
     setLoading(false)
-    navigate("/")
+    navigate("/dashboard")
   }
   if(loading){
     return <p>Loadig ...</p>
