@@ -6,7 +6,9 @@ const verifyToken = require('../middlewares/verifyToken');
 
 router.route('/add').post(verifyToken,houseController.addHouse)
 router.route('/all').get(verifyToken, houseController.getHouses)
+
 router.route('/update/:id').patch(verifyToken,houseController.updateAHouse)
 
+router.route('/:id').get( houseController.getAHouse)
 
 module.exports = router;

@@ -7,6 +7,9 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import OwnedResidences from "../Pages/Dashboard/OwnedResidences";
 import PrivateRoute from "./PrivateRoute";
 import OwnerRoute from "./OwnerRoute";
+import Booking from "../Pages/Booking/Booking";
+import RenterRoute from "./RenterRoute";
+import BookingList from "../Pages/Dashboard/BookingList";
 
 
 const routes =createBrowserRouter([
@@ -25,6 +28,11 @@ const routes =createBrowserRouter([
             {
                 path:"/login",
                 element:<Login></Login>
+            },
+            {
+                path:"/booking/:id",
+                element:<PrivateRoute><Booking></Booking></PrivateRoute>,
+                loader:({params})=>fetch(`http://localhost:8080/api/v1/house/${params.id}`)
             }
         ]
     },
@@ -39,6 +47,10 @@ const routes =createBrowserRouter([
             {
                 path:"/dashboard/owned",
                 element:<OwnerRoute><OwnedResidences></OwnedResidences></OwnerRoute>
+            },
+            {
+                path:"/dashboard/booking",
+                element:<RenterRoute><BookingList></BookingList></RenterRoute>
             },
         ]
     }

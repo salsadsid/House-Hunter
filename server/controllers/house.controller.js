@@ -1,4 +1,4 @@
-const { addHouseService, getHousesService, updateAHouseService } = require("../services/house.services")
+const { addHouseService, getHousesService, updateAHouseService, getHouseService } = require("../services/house.services")
 
 
 
@@ -57,4 +57,22 @@ exports.updateAHouse=async(req,res,next)=>{
             error: error.message
         })
     }
+}
+
+exports.getAHouse=async(req,res,next)=>{
+   try {
+    const id = req.params.id;
+    const result = await getHouseService(id)
+    res.status(200).json({
+        status: "Success",
+        message:"Successfully get the house info.",
+        data: result
+    })
+   } catch (error) {
+    res.status(400).json({
+        status: "Fail",
+        message: "Can't get the data.",
+        error: error.message
+    })
+   }
 }

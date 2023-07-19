@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const userRoute = require("./routes/user.routes");
 const houseRoute = require("./routes/house.routes");
+const bookingRoute = require("./routes/booking.routes");
 
 app.use(express.json());
 app.use(cors());
@@ -15,5 +16,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/house",houseRoute);
+app.use("/api/v1/booking",bookingRoute);
 
 module.exports = app;
